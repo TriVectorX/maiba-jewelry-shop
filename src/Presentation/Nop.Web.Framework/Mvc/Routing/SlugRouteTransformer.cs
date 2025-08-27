@@ -5,7 +5,6 @@ using Nop.Core;
 using Nop.Core.Domain.Blogs;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Localization;
-using Nop.Core.Domain.News;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Topics;
 using Nop.Core.Domain.Vendors;
@@ -98,7 +97,7 @@ public partial class SlugRouteTransformer : DynamicRouteValueTransformer
             var slugLocalized = await _urlRecordService.GetActiveSlugAsync(urlRecord.EntityId, urlRecord.EntityName, language.Id);
             if (!string.IsNullOrEmpty(slugLocalized) && !slugLocalized.Equals(slug, StringComparison.InvariantCultureIgnoreCase))
             {
-                //we should make validation above because some entities does not have SeName for standard (Id = 0) language (e.g. news, blog posts)
+                //we should make validation above because some entities does not have SeName for standard (Id = 0) language (e.g. blog posts)
 
                 //redirect to the page for current language
                 InternalRedirect(httpContext, values, $"/{language.UniqueSeoCode}/{slugLocalized}", false);
@@ -127,10 +126,6 @@ public partial class SlugRouteTransformer : DynamicRouteValueTransformer
 
             case var name when name.Equals(nameof(Vendor), StringComparison.InvariantCultureIgnoreCase):
                 RouteToAction(values, "Catalog", "Vendor", slug, (NopRoutingDefaults.RouteValue.VendorId, urlRecord.EntityId));
-                return;
-
-            case var name when name.Equals(nameof(NewsItem), StringComparison.InvariantCultureIgnoreCase):
-                RouteToAction(values, "News", "NewsItem", slug, (NopRoutingDefaults.RouteValue.NewsItemId, urlRecord.EntityId));
                 return;
 
             case var name when name.Equals(nameof(BlogPost), StringComparison.InvariantCultureIgnoreCase):
