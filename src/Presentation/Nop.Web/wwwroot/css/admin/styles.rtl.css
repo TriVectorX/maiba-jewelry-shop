@@ -1952,6 +1952,17 @@ div.dt-container div.dt-paging {
   border: 1px solid #eaeaea;
 }
 
+.reminder-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -7.5px;
+  margin-right: -7.5px;
+}
+
+.reminder-row input[type=checkbox] {
+  margin-top: 11px;
+}
+
 @media (max-width: 1500px) {
   /* CONFIGURATION STEPS */
   .configuration-step-icon {

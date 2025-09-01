@@ -24,6 +24,7 @@ using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.News;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
+using Nop.Core.Domain.Reminders;
 using Nop.Core.Domain.ScheduleTasks;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
@@ -42,6 +43,7 @@ using Nop.Services.Customers;
 using Nop.Services.Helpers;
 using Nop.Services.Media;
 using Nop.Services.Messages;
+using Nop.Services.Reminders;
 using Nop.Services.Seo;
 
 namespace Nop.Services.Installation;
@@ -1105,6 +1107,66 @@ public partial class InstallationService
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_1_MESSAGE,
+                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 2,
+                    DelayPeriod = MessageDelayPeriod.Hours,
+                },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_2_MESSAGE,
+                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 1,
+                    DelayPeriod = MessageDelayPeriod.Days,
+                },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_3_MESSAGE,
+                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 5,
+                    DelayPeriod = MessageDelayPeriod.Days,
+                },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_PENDING_ORDER_FOLLOW_UP_1_MESSAGE,
+                    Subject = "You haven’t completed the order",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a target=\"_blank\" href=\"%Order.OrderURLForCustomer%\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 3,
+                    DelayPeriod = MessageDelayPeriod.Days
+                },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_PENDING_ORDER_FOLLOW_UP_2_MESSAGE,
+                    Subject = "The payment has not been completed",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a target=\"_blank\" href=\"%Order.OrderURLForCustomer%\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 10,
+                    DelayPeriod = MessageDelayPeriod.Days
+                },
+                new()
+                {
+                    Name = MessageTemplateSystemNames.REMINDER_REGISTRATION_FOLLOW_UP_MESSAGE,
+                    Subject = "Complete registration at %Store.Name%.",
+                    Body = $"<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}To activate your account <a href=\"%Customer.AccountActivationURL%\">click here</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Store.Name%{Environment.NewLine}",
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                    DelayBeforeSend = 1,
+                    DelayPeriod = MessageDelayPeriod.Days
+                }
             };
 
         await _dataProvider.BulkInsertEntitiesAsync(messageTemplates);
@@ -2107,6 +2169,13 @@ public partial class InstallationService
             MaximumNumberEntities = 8,
             GridThumbPictureSize = 220,
             MaximumMainMenuLevels = 2
+        });
+
+        await SaveSettingAsync(dictionary, new RemindersSettings
+        {
+            AbandonedCartEnabled = true,
+            PendingOrdersEnabled = true,
+            IncompleteRegistrationEnabled = true
         });
     }
 
@@ -3433,6 +3502,27 @@ public partial class InstallationService
                     Seconds = 86400,
                     Type = "Nop.Services.Gdpr.DeleteInactiveCustomersTask, Nop.Services",
                     Enabled = false,
+                    StopOnError = false
+                },
+                new() {
+                    Name = "Process abandoned carts",
+                    Seconds = 60 * 20,
+                    Type = RemindersDefaults.AbandonedCarts.ProcessTaskTypeFullName,
+                    Enabled = true,
+                    StopOnError = false
+                },
+                new() {
+                    Name = "Process incomplete orders",
+                    Seconds = 60 * 60,
+                    Type = RemindersDefaults.PendingOrders.ProcessTaskTypeFullName,
+                    Enabled = true,
+                    StopOnError = false
+                },
+                new() {
+                    Name = "Process incomplete registrations",
+                    Seconds = 60 * 60,
+                    Type = RemindersDefaults.IncompleteRegistrations.ProcessTaskTypeFullName,
+                    Enabled = true,
                     StopOnError = false
                 }
             };
