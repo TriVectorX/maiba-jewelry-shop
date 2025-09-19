@@ -1110,8 +1110,8 @@ public partial class InstallationService
                 new()
                 {
                     Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_1_MESSAGE,
-                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
-                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    Subject = "Dear %Customer.FirstName%, you left some items in your cart.",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>We noticed you left an item in your cart and this is a friendly reminder to complete your purchase.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 2,
@@ -1120,8 +1120,8 @@ public partial class InstallationService
                 new()
                 {
                     Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_2_MESSAGE,
-                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
-                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    Subject = "Dear %Customer.FirstName%, was there a problem? What can we help you with?",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>We noticed you left something at checkout:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}<p>Was there a problem or any questions? Please reply to this email and we will help you.</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 1,
@@ -1130,8 +1130,8 @@ public partial class InstallationService
                 new()
                 {
                     Name = MessageTemplateSystemNames.REMINDER_ABANDONED_CART_FOLLOW_UP_3_MESSAGE,
-                    Subject = "%Customer.FirstName%, you left some items in your cart. %Store.Name%.",
-                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>we noticed you left an item in your cart.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>{Environment.NewLine}",
+                    Subject = "Dear %Customer.FirstName%, you left some items in your cart.",
+                    Body = $"<p>Hi %Customer.FirstName%,</p>{Environment.NewLine}<p>We noticed you left an item in your cart and this is a friendly reminder to complete your purchase.</p>{Environment.NewLine}<p>Your shopping cart currently contains the following items:</p>{Environment.NewLine}%Customer.Cart%{Environment.NewLine}<p>Please visit your <a href=\"%Customer.ShoppingCartUrl%\">shopping cart</a> to complete your order</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 5,
@@ -1141,7 +1141,7 @@ public partial class InstallationService
                 {
                     Name = MessageTemplateSystemNames.REMINDER_PENDING_ORDER_FOLLOW_UP_1_MESSAGE,
                     Subject = "You haven’t completed the order",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a target=\"_blank\" href=\"%Order.OrderURLForCustomer%\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
+                    Body = $"<h1>You haven’t completed the order</h1>{Environment.NewLine}<p>Dear %Order.CustomerFullName%,</p>{Environment.NewLine}<p>We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a></p>{Environment.NewLine}<p>Below is the summary of the order:</p>{Environment.NewLine}<p></p>{Environment.NewLine}<p>Name: %Order.CustomerFullName% (%Order.CustomerEmail%)</p>{Environment.NewLine}<p>Order Number: %Order.OrderNumber%</p>{Environment.NewLine}<p>Date Ordered: %Order.CreatedOn%</p>{Environment.NewLine}<p>Product(s):</p>{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}<p>To complete your order:</p>{Environment.NewLine}<p>Go to our website and place a new order.</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 3,
@@ -1151,7 +1151,7 @@ public partial class InstallationService
                 {
                     Name = MessageTemplateSystemNames.REMINDER_PENDING_ORDER_FOLLOW_UP_2_MESSAGE,
                     Subject = "The payment has not been completed",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a target=\"_blank\" href=\"%Order.OrderURLForCustomer%\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
+                    Body = $"<h1>You haven’t completed the order</h1>{Environment.NewLine}<p>Dear %Order.CustomerFullName%,</p>{Environment.NewLine}<p>We noticed that you haven’t completed the payment for your order on <a href=\"%Store.URL%\">%Store.Name%</a></p>{Environment.NewLine}<p>Below is the summary of the order:</p>{Environment.NewLine}<p></p>{Environment.NewLine}<p>Name: %Order.CustomerFullName% (%Order.CustomerEmail%)</p>{Environment.NewLine}<p>Order Number: %Order.OrderNumber%</p>{Environment.NewLine}<p>Date Ordered: %Order.CreatedOn%</p>{Environment.NewLine}<p>Product(s):</p>{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}<p>To complete your order:</p>{Environment.NewLine}<p>Go to your order details <a href=\"%Order.OrderURLForCustomer%\">here</a> and click the \"Retry payment\" button.</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 10,
@@ -1160,8 +1160,8 @@ public partial class InstallationService
                 new()
                 {
                     Name = MessageTemplateSystemNames.REMINDER_REGISTRATION_FOLLOW_UP_MESSAGE,
-                    Subject = "Complete registration at %Store.Name%.",
-                    Body = $"<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}To activate your account <a href=\"%Customer.AccountActivationURL%\">click here</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Store.Name%{Environment.NewLine}",
+                    Subject = "Registration at %Store.Name%.",
+                    Body = $"<h1>Confirm your email</h1>{Environment.NewLine}<p>You’re receiving this message because you recently signed up on our website. Please confirm your email address by clicking the link below:</p>{Environment.NewLine}<p><a href=\"%Customer.AccountActivationURL%\">%Customer.AccountActivationURL%</a></p>{Environment.NewLine}<p>This step adds extra security to your business by verifying you own this email.</p>{Environment.NewLine}<p>Thank You!</p>",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id,
                     DelayBeforeSend = 1,
