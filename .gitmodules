@@ -1,0 +1,4 @@
+[submodule "src/Presentation/Nop.Web/Themes/Maiba"]
+	branch = main
+	path = src/Presentation/Nop.Web/Themes/Maiba
+	url = https://github.com/TriVectorX/maiba-jewelry-shop-theme.git
