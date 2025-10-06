@@ -1,19 +1,19 @@
 version: "3.9"
 services:
   nop-mysql:
-    image: mysql:8.0
+    image: mariadb:11.8
     container_name: nop-mysql
     restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: nopcommerce
-      MYSQL_USER: nop
-      MYSQL_PASSWORD: nop123
-      MYSQL_ROOT_PASSWORD: root123
-    command: ["mysqld", "--default-authentication-plugin=mysql_native_password", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--skip-log-bin"]
+      MARIADB_DATABASE: nopcommerce
+      MARIADB_USER: nop
+      MARIADB_PASSWORD: nop123
+      MARIADB_ROOT_PASSWORD: root123
+    command: ["mariadbd", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--skip-log-bin"]
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -u nop -pnop123 -h 127.0.0.1 || exit 1"]
+      test: ["CMD-SHELL", "mariadb-admin ping -u nop -pnop123 -h 127.0.0.1 || exit 1"]
       interval: 5s
       timeout: 3s
       retries: 30
