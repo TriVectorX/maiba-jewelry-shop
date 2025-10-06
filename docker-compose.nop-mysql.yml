@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   nop-mysql:
     image: mariadb:11.8
