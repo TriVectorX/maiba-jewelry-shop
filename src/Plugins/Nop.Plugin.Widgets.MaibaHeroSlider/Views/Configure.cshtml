@@ -1,0 +1,214 @@
+@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Plugins.Widgets.MaibaHeroSlider.ManageSlides")
+    </h1>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                @* Existing Slides List *@
+                <div class="card card-default">
+                    <div class="card-header">
+                        @T("Plugins.Widgets.MaibaHeroSlider.Slides")
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Slides.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@T("Plugins.Widgets.MaibaHeroSlider.Fields.DisplayOrder")</th>
+                                            <th>@T("Plugins.Widgets.MaibaHeroSlider.Fields.Heading")</th>
+                                            <th>@T("Plugins.Widgets.MaibaHeroSlider.Fields.IsActive")</th>
+                                            <th>@T("Admin.Common.Edit")</th>
+                                            <th>@T("Admin.Common.Delete")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var slide in Model.Slides.OrderBy(s => s.DisplayOrder))
+                                        {
+                                            <tr>
+                                                <td>@slide.DisplayOrder</td>
+                                                <td>@slide.Heading</td>
+                                                <td>
+                                                    @if (slide.IsActive)
+                                                    {
+                                                        <i class="fas fa-check true-icon"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-times false-icon"></i>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("SlideEdit", "MaibaHeroSlider", new { id = slide.Id, area = AreaNames.ADMIN })" class="btn btn-default">
+                                                        @T("Admin.Common.Edit")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" onclick="deleteSlide(@slide.Id)">
+                                                        @T("Admin.Common.Delete")
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">
+                                @T("Admin.Common.NoResultsFound")
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @* Add New Slide Form *@
+                <div class="card card-default">
+                    <div class="card-header">
+                        @T("Plugins.Widgets.MaibaHeroSlider.AddNew")
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="MaibaHeroSlider" asp-action="Configure" method="post">
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="DisplayOrder" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="DisplayOrder" />
+                                    <span asp-validation-for="DisplayOrder"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="PictureId" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="PictureId" asp-template="Picture" />
+                                    <span asp-validation-for="PictureId"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ThumbnailPictureId" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ThumbnailPictureId" asp-template="Picture" />
+                                    <span asp-validation-for="ThumbnailPictureId"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Tag" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Tag" />
+                                    <span asp-validation-for="Tag"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Heading" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Heading" />
+                                    <span asp-validation-for="Heading"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Description" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Description" asp-template="Textarea" />
+                                    <span asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ButtonText" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ButtonText" />
+                                    <span asp-validation-for="ButtonText"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ButtonUrl" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ButtonUrl" />
+                                    <span asp-validation-for="ButtonUrl"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="IsActive" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="IsActive" />
+                                    <span asp-validation-for="IsActive"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-9 offset-md-3">
+                                    <button type="submit" name="save" class="btn btn-primary">
+                                        @T("Admin.Common.Save")
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function deleteSlide(id) {
+        if (confirm('@T("Admin.Common.AreYouSure")')) {
+            $.ajax({
+                url: '@Url.Action("SlideDelete", "MaibaHeroSlider", new { area = AreaNames.ADMIN })',
+                type: 'POST',
+                data: { 
+                    id: id,
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(result) {
+                    if (result.Result) {
+                        location.reload();
+                    } else {
+                        alert(result.Message || '@T("Admin.Common.Alert.DeleteFailed")');
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Delete failed:', xhr);
+                    alert('@T("Admin.Common.Alert.DeleteFailed")');
+                }
+            });
+        }
+    }
+</script>
+

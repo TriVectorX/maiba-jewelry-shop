@@ -40,6 +40,10 @@
     <None Include="Plugins\**" CopyToPublishDirectory="PreserveNewest" Exclude="Plugins\**\runtimes\**;Plugins\**\ref\**;Plugins\**\*.pdb" />
 
     <Content Include="Themes\**" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="Never" />
+    
+    <!-- Exclude Razor views from theme plugin folders (they're compiled by the actual plugin project) -->
+    <Content Remove="Themes\**\Plugins\**\Views\**\*.cshtml" />
+    <None Include="Themes\**\Plugins\**\Views\**\*.cshtml" CopyToPublishDirectory="PreserveNewest" />
 
     <!-- We copy the \Logs directory -->
     <Content Include="Logs\**" CopyToPublishDirectory="PreserveNewest" />

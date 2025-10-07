@@ -1,0 +1,12 @@
+{
+  "Group": "Widgets",
+  "FriendlyName": "Maiba Hero Slider",
+  "SystemName": "Widgets.MaibaHeroSlider",
+  "Version": "1.0.0",
+  "SupportedVersions": [ "4.90" ],
+  "Author": "Maiba Jewelry Shop",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.MaibaHeroSlider.dll",
+  "Description": "Custom hero slider widget for Maiba theme with full admin configuration"
+}
+

@@ -1,0 +1,12 @@
+{
+  "Group": "Misc",
+  "FriendlyName": "Admin Access Control",
+  "SystemName": "Misc.AdminAccessControl",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.90" ],
+  "Author": "Maiba Jewelry",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Security.AdminAccess.dll",
+  "Description": "Restricts access to the admin area using IP whitelist and secret access key validation"
+}
+

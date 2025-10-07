@@ -1,0 +1,153 @@
+@model PublicInfoModel
+
+@if (Model.Slides.Any())
+{
+    @* Render slider content that integrates with the hero section wrapper in Home/Index.cshtml *@
+    <div class="maiba-hero-slider">
+        <div class="hero-slider-wrapper">
+            @foreach (var slide in Model.Slides)
+            {
+                <div class="hero-slide @(slide == Model.Slides.First() ? "active" : "")" data-slide-id="@slide.Id">
+                    <div class="hero-slide__image">
+                        @if (!string.IsNullOrEmpty(slide.PictureUrl))
+                        {
+                            <img src="@slide.PictureUrl" alt="@slide.Heading" />
+                        }
+                    </div>
+                    <div class="hero-slide__content">
+                        @if (!string.IsNullOrEmpty(slide.Tag))
+                        {
+                            <span class="hero-slide__tag">@slide.Tag</span>
+                        }
+                        @if (!string.IsNullOrEmpty(slide.Heading))
+                        {
+                            <h1 class="hero-slide__heading">@slide.Heading</h1>
+                        }
+                        @if (!string.IsNullOrEmpty(slide.Description))
+                        {
+                            <p class="hero-slide__description">@slide.Description</p>
+                        }
+                        @if (!string.IsNullOrEmpty(slide.ButtonText) && !string.IsNullOrEmpty(slide.ButtonUrl))
+                        {
+                            <a href="@slide.ButtonUrl" class="hero-slide__button">
+                                @slide.ButtonText
+                                <span class="btn-icon">→</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        @* Pagination dots *@
+        @if (Model.Slides.Count > 1)
+        {
+            <div class="p-home__hero-pagination">
+                @for (var i = 0; i < Model.Slides.Count; i++)
+                {
+                    <button class="pagination-dot @(i == 0 ? "active" : "")" 
+                            data-slide-index="@i" 
+                            aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
+        }
+
+        @* Store slide thumbnails data for the sidebar *@
+        <script type="application/json" id="hero-slider-data">
+        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new {
+            slides = Model.Slides.Select((s, i) => new { 
+                index = i,
+                thumbnailUrl = s.ThumbnailUrl,
+                heading = s.Heading
+            }).ToList()
+        }))
+        </script>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a bit for thumbnails to be rendered
+            setTimeout(function() {
+                const slider = document.querySelector('.maiba-hero-slider');
+                if (!slider) return;
+
+                const slides = slider.querySelectorAll('.hero-slide');
+                const thumbs = document.querySelectorAll('.p-home__hero-thumbs .thumb-item');
+                const dots = slider.querySelectorAll('.pagination-dot');
+                let currentIndex = 0;
+                let autoplayInterval;
+
+                function showSlide(index) {
+                    if (index < 0 || index >= slides.length) return;
+
+                    // Hide all slides
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    thumbs.forEach(thumb => {
+                        thumb.classList.remove('active');
+                        thumb.removeAttribute('aria-current');
+                    });
+                    dots.forEach(dot => dot.classList.remove('active'));
+
+                    // Show current slide
+                    slides[index].classList.add('active');
+                    if (thumbs[index]) {
+                        thumbs[index].classList.add('active');
+                        thumbs[index].setAttribute('aria-current', 'true');
+                    }
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+
+                    currentIndex = index;
+                }
+
+                function nextSlide() {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    showSlide(nextIndex);
+                }
+
+                function startAutoplay() {
+                    stopAutoplay();
+                    if (slides.length > 1) {
+                        autoplayInterval = setInterval(nextSlide, 5000);
+                    }
+                }
+
+                function stopAutoplay() {
+                    if (autoplayInterval) {
+                        clearInterval(autoplayInterval);
+                    }
+                }
+
+                // Thumbnail click
+                thumbs.forEach((thumb, index) => {
+                    thumb.addEventListener('click', () => {
+                        showSlide(index);
+                        stopAutoplay();
+                        startAutoplay();
+                    });
+                });
+
+                // Dot click
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        showSlide(index);
+                        stopAutoplay();
+                        startAutoplay();
+                    });
+                });
+
+                // Start autoplay
+                startAutoplay();
+
+                // Pause autoplay on hover
+                const heroSection = document.querySelector('.p-home__hero');
+                if (heroSection) {
+                    heroSection.addEventListener('mouseenter', stopAutoplay);
+                    heroSection.addEventListener('mouseleave', startAutoplay);
+                }
+            }, 100);
+        });
+    </script>
+}
+

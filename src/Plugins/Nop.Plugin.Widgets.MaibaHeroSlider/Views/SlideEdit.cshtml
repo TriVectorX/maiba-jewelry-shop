@@ -1,0 +1,133 @@
+@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Plugins.Widgets.MaibaHeroSlider.Edit")
+    </h1>
+    <div class="float-right">
+        <a asp-controller="MaibaHeroSlider" asp-action="Configure" asp-area="@AreaNames.ADMIN" class="btn btn-default">
+            <i class="fas fa-arrow-left"></i>
+            @T("Admin.Common.BackToList")
+        </a>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <form asp-controller="MaibaHeroSlider" asp-action="SlideEdit" method="post">
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="DisplayOrder" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="DisplayOrder" />
+                                    <span asp-validation-for="DisplayOrder"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="PictureId" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="PictureId" asp-template="Picture" />
+                                    <span asp-validation-for="PictureId"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ThumbnailPictureId" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ThumbnailPictureId" asp-template="Picture" />
+                                    <span asp-validation-for="ThumbnailPictureId"></span>
+                                    <div class="form-text text-muted">
+                                        <small>Optional: Leave empty to auto-generate thumbnail from main image. Upload a different image for custom thumbnail (recommended 150x150px for vertical navigation).</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Tag" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Tag" />
+                                    <span asp-validation-for="Tag"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Heading" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Heading" />
+                                    <span asp-validation-for="Heading"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="Description" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="Description" asp-template="Textarea" />
+                                    <span asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ButtonText" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ButtonText" />
+                                    <span asp-validation-for="ButtonText"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="ButtonUrl" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="ButtonUrl" />
+                                    <span asp-validation-for="ButtonUrl"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <nop-label asp-for="IsActive" />
+                                </div>
+                                <div class="col-md-9">
+                                    <nop-editor asp-for="IsActive" />
+                                    <span asp-validation-for="IsActive"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-9 offset-md-3">
+                                    <button type="submit" name="save" class="btn btn-primary">
+                                        @T("Admin.Common.Save")
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

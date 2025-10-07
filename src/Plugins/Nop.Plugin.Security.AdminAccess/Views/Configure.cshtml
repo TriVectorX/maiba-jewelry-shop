@@ -1,0 +1,106 @@
+@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+@await Html.PartialAsync("Table", new Nop.Web.Areas.Admin.Models.Common.TableModel
+{
+    Name = "admin-access-configure"
+})
+
+<form asp-controller="AdminAccess" asp-action="Configure" method="post">
+    <div class="cards-group">
+        <div class="card card-default">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="EnableIpWhitelist" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="EnableIpWhitelist" />
+                        <span asp-validation-for="EnableIpWhitelist"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="AllowedIpAddresses" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-textarea asp-for="AllowedIpAddresses" rows="5" />
+                        <span asp-validation-for="AllowedIpAddresses"></span>
+                        <p class="form-text text-muted">
+                            Enter comma-separated IP addresses (e.g., 192.168.1.1,10.0.0.5). Use * to allow all IPs.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="EnableSecretKey" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="EnableSecretKey" />
+                        <span asp-validation-for="EnableSecretKey"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="SecretAccessKey" />
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <nop-editor asp-for="SecretAccessKey" asp-required="true" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("RegenerateKey")'">
+                                    <i class="fas fa-sync"></i> Regenerate
+                                </button>
+                            </div>
+                        </div>
+                        <span asp-validation-for="SecretAccessKey"></span>
+                        <p class="form-text text-muted">
+                            Access URL: <code id="accessUrl">@($"{Context.Request.Scheme}://{Context.Request.Host}/admin?key={Model.SecretAccessKey}")</code>
+                            <button type="button" class="btn btn-link btn-sm" onclick="copyToClipboard()">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="CookieExpirationHours" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="CookieExpirationHours" />
+                        <span asp-validation-for="CookieExpirationHours"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="AccessDeniedMessage" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-textarea asp-for="AccessDeniedMessage" rows="3" />
+                        <span asp-validation-for="AccessDeniedMessage"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-9 offset-md-3">
+                        <button type="submit" name="save" class="btn btn-primary">
+                            <i class="far fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("accessUrl").innerText;
+        navigator.clipboard.writeText(copyText).then(function() {
+            alert('Access URL copied to clipboard!');
+        });
+    }
+</script>
+
