@@ -4,12 +4,15 @@
     Layout = "_ConfigurePlugin";
 }
 
-@await Html.PartialAsync("Table", new Nop.Web.Areas.Admin.Models.Common.TableModel
-{
-    Name = "admin-access-configure"
-})
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Plugins.Misc.AdminAccessControl.Configure")
+    </h1>
+</div>
 
-<form asp-controller="AdminAccess" asp-action="Configure" method="post">
+<section class="content">
+    <div class="container-fluid">
+        <form asp-controller="AdminAccess" asp-action="Configure" method="post">
     <div class="cards-group">
         <div class="card card-default">
             <div class="card-body">
@@ -93,7 +96,9 @@
             </div>
         </div>
     </div>
-</form>
+        </form>
+    </div>
+</section>
 
 <script>
     function copyToClipboard() {
